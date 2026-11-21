@@ -13,8 +13,8 @@ android {
         versionCode 1
         versionName '0.1'
         ndk {
-            // Experimental 32-bit ARM support; arm64 remains supported.
-            abiFilters 'armeabi-v7a', 'arm64-v8a'
+            // This fork's CI artifact targets the user's 32-bit ARM device.
+            abiFilters 'armeabi-v7a'
         }
     }
 
