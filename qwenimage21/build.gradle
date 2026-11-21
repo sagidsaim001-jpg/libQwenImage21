@@ -10,8 +10,8 @@ android {
     defaultConfig {
         minSdk 26
         ndk {
-            // Both ABIs are experimental until validated on real 32-bit hardware.
-            abiFilters 'armeabi-v7a', 'arm64-v8a'
+            // The fork builds only the 32-bit native library for the target device.
+            abiFilters 'armeabi-v7a'
         }
         externalNativeBuild {
             cmake {
