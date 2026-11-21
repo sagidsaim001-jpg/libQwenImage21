@@ -37,7 +37,7 @@ with per-file size/status so you only fetch what you use.
 | Tested device | Snapdragon 8 Gen 2 (Adreno 740), 16 GB RAM, Android 13 |
 | Speed | int4+Turbo ~220 s end to end at ~512² (6 steps); base int4 ~450 s (20 steps) |
 | Model download | ~9.9 GB default (text encoder+vision 5.4 GB, DiT 4.5 GB, tiny VAE 30 MB); Turbo DiT +5.2 GB |
-| Requirements | arm64 Android 8.0+, OpenCL GPU, **12 GB+ RAM recommended**, ~11 GB free storage |
+| Requirements | arm64 Android 8.0+ supported; `armeabi-v7a` build is experimental and not device-validated; OpenCL GPU, **12 GB+ RAM recommended**, ~11 GB free storage |
 | 2-bit DiT | **Not recommended** — see the callout above and [docs/TWOBIT.md](docs/TWOBIT.md) |
 
 Full per-step timings (text-to-image, image editing, Turbo, multiple reference images): [docs/MORE.md](docs/MORE.md#timings).
@@ -69,7 +69,7 @@ anyway, the next launch reports which stage and settings ran out.
 include ':qwenimage21'
 project(':qwenimage21').projectDir = new File('/path/to/libQwenImage21/qwenimage21')
 // app/build.gradle
-android { defaultConfig { ndk { abiFilters 'arm64-v8a' } } }
+android { defaultConfig { ndk { abiFilters 'armeabi-v7a', 'arm64-v8a' } } }
 dependencies { implementation project(':qwenimage21') }
 ```
 
@@ -142,6 +142,7 @@ Inference code: [`scsonic/MNN` branch `qwen-image-21`](https://github.com/scsoni
 - VAE decode runs on CPU (it exhausted GPU memory at 512×512 on the test phone) — not an issue with the default
   Tiny VAE, which is small enough for GPU.
 - Editing takes 1–2 input images; no CFG (steps default to 20, official default is 40).
+- The `armeabi-v7a` build target is experimental; no 32-bit device has been validated yet. A successful APK build does not mean the model fits in 32-bit memory.
 - Untested on phones under 12 GB RAM.
 
 ## License
