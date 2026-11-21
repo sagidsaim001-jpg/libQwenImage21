@@ -40,9 +40,10 @@ jobs:
 
       - name: Build the 32-bit MNN native library
         env:
-          ANDROID_NDK: ${{ env.ANDROID_HOME }}/ndk/28.2.13676358
           ANDROID_ABI: armeabi-v7a
-        run: scripts/build_libmnn_android.sh
+        run: |
+          export ANDROID_NDK="$ANDROID_HOME/ndk/28.2.13676358"
+          scripts/build_libmnn_android.sh
 
       - name: Version and hash for the artifact names
         id: v
